@@ -34,9 +34,23 @@
 
 class NumberConverter {
 
-  val romanList = List(("M", 1000), ("CM", 900), ("D", 500), ("CD", 400), ("C", 100), ("XC", 90), ("L", 50), ("XL", 40), ("X", 10), ("IX", 9), ("V", 5), ("IV", 4), ("I", 1))
+  private val romanList = List(
+    ("M", 1000),
+    ("CM", 900),
+    ("D", 500),
+    ("CD", 400),
+    ("C", 100),
+    ("XC", 90),
+    ("L", 50),
+    ("XL", 40),
+    ("X", 10),
+    ("IX", 9),
+    ("V", 5),
+    ("IV", 4),
+    ("I", 1)
+  )
 
-  def romanNumberConverter(number: Int): String = {
+  def romanNumberConverter11(number: Int): String = {
 
     var tempNumber = number
 
@@ -44,12 +58,46 @@ class NumberConverter {
 
     romanList.map { element =>
 
-      sb.append(element._1 * (tempNumber / element._2))
+      println("######### element : " + element + " tempNumber : " + tempNumber)
 
+      sb.append(element._1 * (tempNumber / element._2))
       tempNumber = tempNumber % element._2
+
+      println("######### sb " + sb)
     }
 
     sb.toString()
+
+  }
+
+  def romanNumberConverter(number: Int): String = romanList.foldLeft((new StringBuilder(), number)){
+    case ((sb, num), (romanVal, intVal)) => (sb.append(romanVal * (num / intVal)), num % intVal)
+  }._1.toString()
+
+  private val  BritishCurrency = List(("M", 1000),
+    ("£2", 200),
+    ("£1", 100),
+    ("50p", 50),
+    ("20p", 20),
+    ("10p", 10),
+    ("5p", 5),
+    ("2p", 2),
+    ("1p", 1)
+  )
+
+  def makeChane(number: Int): String = BritishCurrency.foldLeft((new StringBuilder(), number)){
+    case ((sb, num), (coinVal, currencyVal)) => (sb.append(coinVal * (num / currencyVal)), num % currencyVal)
+  }._1.toString()
+
+
+  def romanNumberConverter13(number: Int): String = {
+
+    def getRoman(number: Int, sb : StringBuilder, xList: List[(String, Int)]): String =  xList match {
+      case Nil => sb.toString()
+      case x :: xs => getRoman(number % x._2, sb.append(x._1 * (number / x._2)), xs)
+    }
+
+    getRoman(number, new StringBuilder(), romanList)
 
   }
 
@@ -58,15 +106,16 @@ class NumberConverter {
 
     val moduloCount = romanList.scanLeft(number)((num: Int, element: (String, Int)) => num % element._2)
 
-    //println("######### moduloCount" + moduloCount)
+    println("######### moduloCount" + moduloCount)
 
     val result = for ((element, reminder) <- (romanList zip moduloCount)) yield {
+      println("######### element" + element)
 
       element._1 * (reminder / element._2)
 
     }
 
-    //println("######### result" + result)
+    println("######### result" + result)
 
     result.foldLeft("") { (sb, s) => sb + s}
   }
