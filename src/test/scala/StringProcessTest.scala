@@ -5,23 +5,28 @@ class StringProcessTest extends WordSpec with Matchers with PropertyChecks with 
 
   val test = new StringProcess
 
-  "calling getSumOfInt" should {
 
-    "rerun the correct value for" in {
-      test.getSumOfInts("ab1231da") shouldBe 7
-    }
 
-    "rerun same number if its containg 1 digit" in {
-      test.getSumOfInts("1") shouldBe 1
-    }
-
-    "rerun 0 if its empty str" in {
-      test.getSumOfInts("") shouldBe 0
-    }
-
-  }
+//  "calling getSumOfInt" should {
+//
+//    "rerun the correct value for" in {
+//      test.getSumOfInts("ab1231da") shouldBe 7
+//    }
+//
+//    "rerun same number if its containg 1 digit" in {
+//      test.getSumOfInts("1") shouldBe 1
+//    }
+//
+//    "rerun 0 if its empty str" in {
+//      test.getSumOfInts("") shouldBe 0
+//    }
+//
+//  }
 
   "Calling file" in {
-    test.getFile shouldBe List.empty
+    //println(test.maxHeight(1, 4, 62,45))
+    println(test.isPossible(1, 4,62,45))
+
+//    test.getFile shouldBe List.empty
   }
 }
